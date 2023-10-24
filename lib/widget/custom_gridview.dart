@@ -16,46 +16,47 @@ class CustomGridView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.custom(
-        gridDelegate: SliverQuiltedGridDelegate(
-            crossAxisCount: 4,
-            mainAxisSpacing: 4,
-            crossAxisSpacing: 4,
-            repeatPattern:
-                QuiltedGridRepeatPattern.inverted,
-            pattern: const [
-              QuiltedGridTile(2, 2),
-              QuiltedGridTile(1, 1),
-              QuiltedGridTile(1, 1),
-              QuiltedGridTile(1, 2),
-            ]),
-        childrenDelegate: SliverChildBuilderDelegate(
-            childCount: controller.photoList.length,
-            (context, index) {
-          return GestureDetector(
-            onTap: () {
-              Get.to(() => DetailPage(index: index),
-                  transition: Transition.cupertino,
-                  curve: Curves.fastOutSlowIn);
-            },
-            child: Hero(
-              tag: controller.photoList[index].id,
-              child: Container(
-                margin: const EdgeInsets.all(4),
-                child: CachedNetworkImage(
-                  imageUrl: controller
-                      .photoList[index].urls.small,
-                  placeholder: (context, url) =>
-                      const CupertinoActivityIndicator(),
-                  errorWidget: (context, url, error) =>
-                      const Icon(
-                    Icons.image_not_supported_rounded,
-                    color: Colors.grey,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: GridView.custom(
+          shrinkWrap: true,
+          physics: const BouncingScrollPhysics(),
+          gridDelegate: SliverQuiltedGridDelegate(
+              crossAxisCount: 4,
+              mainAxisSpacing: 4,
+              crossAxisSpacing: 4,
+              repeatPattern: QuiltedGridRepeatPattern.inverted,
+              pattern: const [
+                QuiltedGridTile(2, 2),
+                QuiltedGridTile(1, 1),
+                QuiltedGridTile(1, 1),
+                QuiltedGridTile(1, 2),
+              ]),
+          childrenDelegate: SliverChildBuilderDelegate(
+              childCount: controller.photoList.length, (context, index) {
+            return GestureDetector(
+              onTap: () {
+                Get.to(() => DetailPage(index: index),
+                    transition: Transition.cupertino,
+                    curve: Curves.fastOutSlowIn);
+              },
+              child: Hero(
+                tag: controller.photoList[index].id,
+                child: Container(
+                  margin: const EdgeInsets.all(4),
+                  child: CachedNetworkImage(
+                    imageUrl: controller.photoList[index].urls.small,
+                    placeholder: (context, url) =>
+                        const CupertinoActivityIndicator(),
+                    errorWidget: (context, url, error) => const Icon(
+                      Icons.image_not_supported_rounded,
+                      color: Colors.grey,
+                    ),
                   ),
                 ),
               ),
-            ),
-          );
-        }));
+            );
+          })),
+    );
   }
 }

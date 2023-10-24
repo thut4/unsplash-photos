@@ -16,7 +16,7 @@ class HomePage extends StatelessWidget {
         appBar: AppBar(
           title: Text(
             'Unsplash X',
-            style: GoogleFonts.arsenal(
+            style: GoogleFonts.ubuntuMono(
               fontSize: 24,
               fontWeight: FontWeight.w600,
             ),
@@ -24,10 +24,14 @@ class HomePage extends StatelessWidget {
           centerTitle: true,
           elevation: 0,
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
+        body: Column(
+          children: [
+            const SizedBox(
+              height: 15,
+            ),
+            Expanded(
+              flex: 1,
+              child: Container(
                   width: double.maxFinite,
                   height: 50,
                   margin: const EdgeInsets.only(bottom: 10, top: 10),
@@ -73,10 +77,13 @@ class HomePage extends StatelessWidget {
                       );
                     },
                   )),
-              const SizedBox(
-                height: 10,
-              ),
-              Obx(
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Expanded(
+              flex: 13,
+              child: Obx(
                 () => controller.photoList.isEmpty
                     ? Center(
                         child: LoadingAnimationWidget.flickr(
@@ -89,8 +96,8 @@ class HomePage extends StatelessWidget {
                         height: 700,
                         child: CustomGridView(controller: controller)),
               ),
-            ],
-          ),
+            ),
+          ],
         ));
   }
 }
